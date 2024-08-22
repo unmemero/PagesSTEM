@@ -34,6 +34,7 @@ router.post('/',async(req,res)=>{
         majors: req.body.majors,
         contactEmail: req.body.contactEmail,
         socialLinks: req.body.socialLinks,
+        events: req.body.events,
         uploader: req.body.uploader,
     });
     try{
@@ -75,6 +76,9 @@ router.patch('/:id',getOrganization,async(req,res)=>{
     }
     if(req.body.socialLinks != null){
         res.organization.socialLinks = req.body.socialLinks;
+    }
+    if(req.body.events != null){
+        res.organization.events = req.body.events;
     }
     if(req.body.uploader != null){
         res.organization.uploader = req.body.uploader;
