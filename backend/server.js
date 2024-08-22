@@ -16,7 +16,7 @@ app.use(express.json());
 app.use('/api/internships',require('./routes/internships'));
 app.use('/api/jobs',require('./routes/jobs'));
 app.use('/api/scholarships',require('./routes/scholarships'));
-app.use('/api/organiations',require('./routes/organizations'));
+app.use('/api/organizations',require('./routes/organizations'));
 app.use('/api/users',require('./routes/users'));
 app.use('/api/saved',require('./routes/savedResources'));
 
