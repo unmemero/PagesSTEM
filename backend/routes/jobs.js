@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Job = require('../models/Job');
+const auth = require('../middleware/auth');
+const adminOnly = require('../middleware/role');
 
 // Get all jobs
 router.get('/',async(req,res)=>{
@@ -22,7 +24,7 @@ router.get('/:id',getJob,(req,res)=>{
 });
 
 // Create a job
-router.post('/',async(req,res)=>{
+router.post('/',auth,adminOnly,async(req,res)=>{
     const job = new Job({
         title: req.body.title,
         company: req.body.company,
@@ -47,7 +49,7 @@ router.post('/',async(req,res)=>{
 });
 
 // Update a job
-router.patch('/:id',getJob,async(req,res)=>{
+router.patch('/:id',getJob,auth,adminOnly,async(req,res)=>{
     if(req.body.title != null){
         res.job.title = req.body.title;
     }
@@ -96,7 +98,7 @@ router.patch('/:id',getJob,async(req,res)=>{
 });
 
 // Delete a job
-router.delete('/:id',getJob,async(req,res)=>{
+router.delete('/:id',getJob,auth,adminOnly,async(req,res)=>{
     try{
         await res.job.deleteOne();
         res.json({message:'Job deleted'});

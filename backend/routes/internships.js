@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Internship = require('../models/Internship');
+const auth = require('../middleware/auth');
+const adminOnly = require('../middleware/role');
 
 // Get all internships
 router.get('/',async(req,res)=>{
@@ -22,7 +24,7 @@ router.get('/:id',getInternship,(req,res)=>{
 });
 
 // Create an internship
-router.post('/',async(req,res)=>{
+router.post('/',auth,adminOnly,async(req,res)=>{
     const internship = new Internship({
         title: req.body.title,
         company: req.body.company,
@@ -49,7 +51,7 @@ router.post('/',async(req,res)=>{
 });
 
 // Update an internship
-router.patch('/:id',getInternship,async(req,res)=>{
+router.patch('/:id',getInternship,auth,adminOnly,async(req,res)=>{
     if(req.body.title != null){
         res.internship.title = req.body.title;
     }
@@ -104,7 +106,7 @@ router.patch('/:id',getInternship,async(req,res)=>{
 });
 
 // Delete an internship
-router.delete('/:id',getInternship,async(req,res)=>{
+router.delete('/:id',getInternship,auth,adminOnly,async(req,res)=>{
     try{
         await res.internship.deleteOne();
         res.json({message:'Internship deleted'});

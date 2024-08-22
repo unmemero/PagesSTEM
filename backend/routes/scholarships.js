@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Scholarship = require('../models/Scholarship');
+const auth = require('../middleware/auth');
+const adminOnly = require('../middleware/role');
 
 // Get all scholarships
 router.get('/',async(req,res)=>{
@@ -22,7 +24,7 @@ router.get('/:id',getScholarship,(req,res)=>{
 });
 
 // Create a scholarship
-router.post('/',async(req,res)=>{
+router.post('/',auth,adminOnly,async(req,res)=>{
     const scholarship = new Scholarship({
         title: req.body.title,
         organization: req.body.organization,
@@ -46,7 +48,7 @@ router.post('/',async(req,res)=>{
 });
 
 // Update a scholarship
-router.patch('/:id',getScholarship,async(req,res)=>{
+router.patch('/:id',getScholarship,auth,adminOnly,async(req,res)=>{
     if(req.body.title != null){
         res.scholarship.title = req.body.title;
     }
@@ -92,7 +94,7 @@ router.patch('/:id',getScholarship,async(req,res)=>{
 });
 
 // Delete a scholarship
-router.delete('/:id',getScholarship,async(req,res)=>{
+router.delete('/:id',getScholarship,auth,adminOnly,async(req,res)=>{
     try{
         await res.scholarship.deleteOne();
         res.json({message:'Scholarship deleted'});

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Organization = require('../models/Organization');
+const auth = require('../middleware/auth');
+const adminOnly = require('../middleware/role');
 
 // Get all organizations
 router.get('/',async(req,res)=>{
@@ -22,7 +24,7 @@ router.get('/:id',getOrganization,(req,res)=>{
 });
 
 // Create an organization
-router.post('/',async(req,res)=>{
+router.post('/',auth,adminOnly,async(req,res)=>{
     const organization = new Organization({
         title: req.body.title,
         logo: req.body.logo,
@@ -46,7 +48,7 @@ router.post('/',async(req,res)=>{
 });
 
 // Update an organization
-router.patch('/:id',getOrganization,async(req,res)=>{
+router.patch('/:id',getOrganization,auth,adminOnly,async(req,res)=>{
     if(req.body.title != null){
         res.organization.title = req.body.title;
     }
@@ -92,7 +94,7 @@ router.patch('/:id',getOrganization,async(req,res)=>{
 });
 
 // Delete an organization
-router.delete('/:id',getOrganization,async(req,res)=>{
+router.delete('/:id',getOrganization,auth,adminOnly,async (req,res)=>{
     try{
         await res.organization.deleteOne();
         res.json({message:'Organization deleted'});
