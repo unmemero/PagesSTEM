@@ -43,14 +43,16 @@ const OrganizationSchema = new mongoose.Schema({
         required: false,
     },
     events: {
-        type: {
-            title: String,
-            description: String,
-            date: Date,
-            time: String,
-            location: String,
-            link: String,
-        },
+        type: [
+            {
+                title: String,
+                description: String,
+                date: Date,
+                time: String,
+                location: String,
+                link: String,
+            }
+        ],
         required: false,
     },
     uploader: {
