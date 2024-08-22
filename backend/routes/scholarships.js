@@ -25,7 +25,7 @@ router.get('/:id',getScholarship,(req,res)=>{
 router.post('/',async(req,res)=>{
     const scholarship = new Scholarship({
         title: req.body.title,
-        organization: req.body.body.organization,
+        organization: req.body.organization,
         majors: req.body.majors,
         locations: req.body.locations,
         description: req.body.description,
