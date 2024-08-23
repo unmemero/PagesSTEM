@@ -11,7 +11,7 @@ function auth(req, res, next){
         req.user = decoded;
         next();
     }catch(err){
-        res.statius(401).json({message:'Invalid Token'});
+        res.status(401).json({message:'Invalid Token'});
     }
 }
 
