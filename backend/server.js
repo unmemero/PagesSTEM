@@ -1,5 +1,9 @@
 const express = require('express');
 const connectDB = require('./config/db');
+/*
+const cors = require('cors');
+const helmet = require('helmet');
+*/
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -9,8 +13,22 @@ const app = express();
 //Connect to DB
 connectDB();
 
-//Init Middleware
+//Create cors restraints (May uncomment later)
+/*
+const corsOption = {
+    origin: 'http://localhost:3000',
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true,
+    optionSuccessStatus: 200
+}
+*/
+
+//Init Middleware (may uncomment later cors)
 app.use(express.json());
+/*
+app.use(cors(corsOption));
+app.use(helmet());
+*/
 
 //Define routes
 app.use('/api/internships',require('./routes/internships'));
