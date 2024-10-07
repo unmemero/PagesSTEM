@@ -1,0 +1,89 @@
+body {
+  max-width: 100vw;
+}
+
+main {
+  font-weight: bold;
+  width: 100vw;
+}
+main form {
+  margin-top: 45px;
+  background: black;
+  padding: 30px;
+  border-radius: 15px;
+  border: silver solid 7px;
+  height: auto;
+}
+main form label {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+main form input {
+  margin-bottom: 20px;
+  border: solid 2px white;
+  color: white;
+  background: black;
+  border-radius: 7px;
+  font-size: 1.2em;
+  padding: 4px;
+  text-align: center;
+}
+main form button {
+  color: rgb(255, 255, 255);
+  background: radial-gradient(rgb(2, 11, 14), darkblue);
+  font-weight: bold;
+  font-size: 1.0125em;
+  padding: 10px;
+  border-radius: 15px;
+  border: solid 2px white;
+  transition: 0.2s ease-in;
+}
+main form button:hover {
+  background: aqua;
+  color: black;
+  border: solid 2px silver;
+}
+main form button:active {
+  background: green;
+}
+main form .password-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 40px;
+}
+main form .password-input #password-toggle {
+  background: none;
+  border: none;
+  color: grey;
+  position: relative;
+  right: 45px;
+  bottom: 8px;
+  cursor: pointer;
+}
+main form .password-input #confirm-toggle {
+  background: none;
+  border: none;
+  color: grey;
+  position: relative;
+  right: 45px;
+  bottom: 8px;
+  cursor: pointer;
+}
+main p a {
+  color: white;
+  text-decoration: none;
+  background: black;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid white;
+  transition: 0.1s ease-in;
+}
+main p a:hover {
+  background-color: aqua;
+  color: black;
+}
+main p a:active {
+  background: green;
+  color: white;
+}/*# sourceMappingURL=login.css.map */
