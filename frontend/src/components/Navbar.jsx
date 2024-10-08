@@ -12,7 +12,7 @@ function Navbar() {
             <h2>STEM Resources</h2>
         </Link>
 
-        {location.pathname === "/" || location.pathname === "/index.html" && (
+        {location.pathname !== "/" && (
             <div className="header-links">
                 <Link to="/scholarships" className="header-link">Scholarships</Link>
                 <Link to="/internships" className="header-link">Internships</Link>
