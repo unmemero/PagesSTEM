@@ -1,12 +1,15 @@
 import React from 'react';
-import JobList from '../components/JobList';
+import ScholarshipList from '../components/ScholarshipList';
 
-function OrganizationsPage() {
+const ScholarshipsPage = ({ currentUser }) => {
+  const userRole = currentUser ? currentUser.role : 'user';
+
   return (
-    <div>
-      <JobList />
+    <div className="scholarships-page">
+      <h1>Scholarship Listings</h1>
+      <ScholarshipList currentUser={{ role: userRole }} />
     </div>
   );
-}
+};
 
-export default OrganizationsPage;
+export default ScholarshipsPage;

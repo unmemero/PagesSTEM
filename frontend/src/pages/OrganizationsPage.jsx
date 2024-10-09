@@ -1,12 +1,15 @@
 import React from 'react';
+import OrganizationList from '../components/OrganizationList';
 
-function OrganizationsPage() {
+const OrganizationsPage = ({ currentUser }) => {
+  const userRole = currentUser ? currentUser.role : 'user';
+
   return (
-    <div>
-      <h1>Organizations Page</h1>
-      <p>Here you can find information about student organizations.</p>
+    <div className="organizations-page">
+      <h1>Organization Listings</h1>
+      <OrganizationList currentUser={{ role: userRole }} />
     </div>
   );
-}
+};
 
 export default OrganizationsPage;

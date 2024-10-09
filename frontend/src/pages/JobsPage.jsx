@@ -13,4 +13,3 @@ const JobsPage = ({ currentUser }) => {
 };
 
 export default JobsPage;
-

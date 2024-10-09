@@ -12,7 +12,6 @@ const JobList = ({ currentUser }) => {
       .catch(error => console.error('Error fetching jobs:', error));
   }, []);
 
-  console.log(jobs);
   // Pagination logic
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
@@ -24,7 +23,7 @@ const JobList = ({ currentUser }) => {
     // Logic to delete the job
     axios.delete(`http://localhost:5000/api/jobs/${id}`)
       .then(() => {
-        setJobs(prevJobs => prevJobs.filter(job => job.id !== id));
+        setJobs(prevJobs => prevJobs.filter(job => job._id !== id));
       })
       .catch(error => console.error('Error deleting job:', error));
   };
@@ -65,16 +64,19 @@ const JobList = ({ currentUser }) => {
             <th>Preferred Majors</th>
             <th>Pay</th>
             <th>Date Posted</th>
-            <th>Deadline</th>
-            {currentUser && currentUser.role === 'admin' && (
-              <th>Actions</th>
+            <th>Deadline</th>{currentUser && currentUser.role === 'admin' && (
+              <div>
+                <th>Uploader</th>
+                <th>Actions</th>
+              </div>
             )}
+
           </tr>
         </thead>
         <tbody>
           {currentJobs.map(job => (
-            <tr key={job.id}>
-              <td>{job.title}</td>
+            <tr key={job._id}>
+              <td><a href={job.applicationLink} target="_blank" rel="noopener noreferrer">{job.title}</a></td>
               <td>{job.company}</td>
               <td>
                 <ul>
@@ -98,20 +100,23 @@ const JobList = ({ currentUser }) => {
                   ))}
                 </ul>
               </td>
-              <td>{job.payType}: {job.payAmount}/{job.payPeriod}</td>
-              <td>{job.datePosted}</td>
-              <td>{job.deadline}</td>
+              <td>
+                {job.payType}: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(job.payAmount)}/{job.payPeriod}
+              </td>
+              <td>{new Date(job.datePosted).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</td>
+              <td>{new Date(job.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</td>
+
               {currentUser && currentUser.role === 'admin' && (
                 <td>
-                  <button onClick={() => handleUpdate(job.id)}>Update</button>
-                  <button onClick={() => handleDelete(job.id)}>Delete</button>
+                  <button onClick={() => handleUpdate(job._id)}>Update</button>
+                  <button onClick={() => handleDelete(job._id)}>Delete</button>
                 </td>
               )}
             </tr>
           ))}
         </tbody>
       </table>
-      {/*
+      
       <div className="pagination">
         {[...Array(Math.ceil(jobs.length / jobsPerPage)).keys()].map(number => (
           <button
@@ -122,7 +127,7 @@ const JobList = ({ currentUser }) => {
             {number + 1}
           </button>
         ))}
-      </div>*/}
+      </div>
     </div>
   );
 };
