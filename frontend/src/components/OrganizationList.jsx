@@ -5,7 +5,6 @@ const OrganizationList = ({ currentUser }) => {
   const [organizations, setOrganizations] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [organizationsPerPage, setOrganizationsPerPage] = useState(10);
-
   useEffect(() => {
     axios.get('http://localhost:5000/api/organizations')
       .then(response => setOrganizations(response.data))
@@ -18,11 +17,11 @@ const OrganizationList = ({ currentUser }) => {
   const currentOrganizations = organizations.slice(indexOfFirstOrganization, indexOfLastOrganization);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const handleDelete = (id) => {
-    // Logic to delete the organization
     axios.delete(`http://localhost:5000/api/organizations/${id}`)
       .then(() => {
-        setOrganizations(prevOrganizations => prevOrganizations.filter(organization => organization.id !== id));
+        setOrganizations(prevOrganizations => prevOrganizations.filter(organization => organization._id !== id)); // Use `_id` consistently
       })
       .catch(error => console.error('Error deleting organization:', error));
   };
@@ -33,7 +32,7 @@ const OrganizationList = ({ currentUser }) => {
 
   const handleOrganizationsPerPageChange = (e) => {
     setOrganizationsPerPage(Number(e.target.value));
-    setCurrentPage(1); // Reset to the first page when changing the number of items per page
+    setCurrentPage(1); 
   };
 
   return (
@@ -63,30 +62,30 @@ const OrganizationList = ({ currentUser }) => {
             <th>Website</th>
             <th>Contact Email</th>
             {currentUser && currentUser.role === 'admin' && (
-              <>
+              <React.Fragment>
                 <th>Uploader</th>
                 <th>Actions</th>
-              </>
+              </React.Fragment>
             )}
           </tr>
         </thead>
         <tbody>
           {currentOrganizations.map(organization => (
-            <tr key={organization.id}>
+            <tr key={organization._id}> 
               <td>{organization.title}</td>
               <td>{organization.location}</td>
               <td>{organization.description}</td>
               <td>
                 <ul>
-                  {organization.majors.map((major, index) => (
-                    <li key={index}>{major}</li>
+                  {organization.majors.map(major => (
+                    <li key={major}>{major}</li>
                   ))}
                 </ul>
               </td>
               <td>
                 <ul>
-                  {organization.meetings?.map((meeting, index) => (
-                    <li key={index}>{meeting}</li>
+                  {organization.meetings?.map(meeting => (
+                    <li key={meeting}>{meeting}</li>
                   ))}
                 </ul>
               </td>
@@ -99,13 +98,13 @@ const OrganizationList = ({ currentUser }) => {
                 </a>
               </td>
               {currentUser && currentUser.role === 'admin' && (
-                <>
+                <React.Fragment>
                   <td>{organization.uploader}</td>
                   <td>
-                    <button onClick={() => handleUpdate(organization.id)}>Update</button>
-                    <button onClick={() => handleDelete(organization.id)}>Delete</button>
+                    <button onClick={() => handleUpdate(organization._id)}>Update</button> {/* Use `_id` */}
+                    <button onClick={() => handleDelete(organization._id)}>Delete</button> {/* Use `_id` */}
                   </td>
-                </>
+                </React.Fragment>
               )}
             </tr>
           ))}
@@ -115,7 +114,7 @@ const OrganizationList = ({ currentUser }) => {
       <div className="pagination">
         {[...Array(Math.ceil(organizations.length / organizationsPerPage)).keys()].map(number => (
           <button
-            key={number + 1}
+            key={number} // Use `number` itself for pagination button keys
             onClick={() => paginate(number + 1)}
             className={currentPage === number + 1 ? 'active' : ''}
           >

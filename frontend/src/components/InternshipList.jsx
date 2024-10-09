@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const InternshipList = ({ currentUser }) => {
   const [internships, setInternships] = useState([]);
@@ -58,13 +59,11 @@ const InternshipList = ({ currentUser }) => {
             <th>Title</th>
             <th>Company</th>
             <th>Locations</th>
-            <th>Description</th>
-            <th>Requirements</th>
             <th>Preferred Majors</th>
             <th>Pay</th>
-            <th>Date Posted</th>
             <th>Deadline</th>
-            <th>Start Date</th>
+            <th>Period</th>
+            <th>For more Info</th>
             {currentUser && currentUser.role === 'admin' && (
               <>
                 <th>Uploader</th>
@@ -85,14 +84,6 @@ const InternshipList = ({ currentUser }) => {
                   ))}
                 </ul>
               </td>
-              <td>{internship.description}</td>
-              <td>
-                <ul>
-                  {internship.requirements.map((requirement, index) => (
-                    <li key={index}>{requirement}</li>
-                  ))}
-                </ul>
-              </td>
               <td>
                 <ul>
                   {internship.preferredMajors?.map((major, index) => (
@@ -103,7 +94,6 @@ const InternshipList = ({ currentUser }) => {
               <td>
                 {internship.payType}: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(internship.payAmount)}/{internship.payPeriod}
               </td>
-              <td>{new Date(internship.datePosted).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</td>
               <td>{new Date(internship.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</td>
               <td>{new Date(internship.startDate).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })} to {new Date(internship.endDate).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</td>
 
@@ -116,6 +106,7 @@ const InternshipList = ({ currentUser }) => {
                   </td>
                 </>
               )}
+              <td><Link to={`/internships/${internship._id}`}>See more</Link></td>
             </tr>
           ))}
         </tbody>

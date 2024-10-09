@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const ScholarshipList = ({ currentUser }) => {
   const [scholarships, setScholarships] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [scholarshipsPerPage, setScholarshipsPerPage] = useState(10);
-
   useEffect(() => {
     axios.get('http://localhost:5000/api/scholarships')
       .then(response => setScholarships(response.data))
@@ -18,11 +18,11 @@ const ScholarshipList = ({ currentUser }) => {
   const currentScholarships = scholarships.slice(indexOfFirstScholarship, indexOfLastScholarship);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const handleDelete = (id) => {
-    // Logic to delete the scholarship
     axios.delete(`http://localhost:5000/api/scholarships/${id}`)
       .then(() => {
-        setScholarships(prevScholarships => prevScholarships.filter(scholarship => scholarship.id !== id));
+        setScholarships(prevScholarships => prevScholarships.filter(scholarship => scholarship._id !== id));
       })
       .catch(error => console.error('Error deleting scholarship:', error));
   };
@@ -58,69 +58,40 @@ const ScholarshipList = ({ currentUser }) => {
             <th>Title</th>
             <th>Organization</th>
             <th>Majors</th>
-            <th>Locations</th>
-            <th>Description</th>
-            <th>Requirements</th>
-            <th>Award</th>
-            <th>Date Posted</th>
             <th>Deadline</th>
-            <th>Contact Email</th>
             {currentUser && currentUser.role === 'admin' && (
-              <>
+              <React.Fragment>
                 <th>Uploader</th>
                 <th>Actions</th>
-              </>
+              </React.Fragment>
             )}
           </tr>
         </thead>
         <tbody>
-          {currentScholarships.map(scholarship => (
-            console.log(scholarship),
-            <tr key={scholarship.id}>
+          {currentScholarships.map((scholarship) => (
+            <tr key={scholarship._id}>
               <td><a href={scholarship.applicationLink} target="_blank" rel="noopener noreferrer">{scholarship.title}</a></td>
               <td>{scholarship.organization}</td>
               <td>
                 <ul>
-                  {scholarship.majors.map((major, index) => (
-                    <li key={index}>{major}</li>
+                  {scholarship.majors.map((major) => (
+                    <li key={major}>{major}</li>
                   ))}
                 </ul>
               </td>
-              <td>
-                <ul>
-                  {scholarship.locations.map((location, index) => (
-                    <li key={index}>{location}</li>
-                  ))}
-                </ul>
-              </td>
-              <td>{scholarship.description}</td>
-              <td>
-                <ul>
-                  {scholarship.requirements.map((requirement, index) => (
-                    <li key={index}>{requirement}</li>
-                  ))}
-                </ul>
-              </td>
-              <td>
-                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(scholarship.awardAmmount)}
-              </td>
-              <td>{new Date(scholarship.datePosted).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</td>
               <td>{new Date(scholarship.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</td>
-              <td>
-                <a href={`mailto:${scholarship.contactEmail}`}>
-                  {scholarship.contactEmail}
-                </a>
-              </td>
-
               {currentUser && currentUser.role === 'admin' && (
-                <>
+                <React.Fragment>
                   <td>{scholarship.uploader}</td>
                   <td>
-                    <button onClick={() => handleUpdate(scholarship.id)}>Update</button>
-                    <button onClick={() => handleDelete(scholarship.id)}>Delete</button>
+                    <button onClick={() => handleUpdate(scholarship._id)}>Update</button>
+                    <button onClick={() => handleDelete(scholarship._id)}>Delete</button>
                   </td>
-                </>
+                </React.Fragment>
               )}
+              <td>
+                <Link to={`/scholarships/${scholarship._id}`}>More info</Link>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -34,7 +34,7 @@ router.post('/',auth,adminOnly,async(req,res)=>{
         requirements: req.body.requirements,
         datePosted: req.body.datePosted,
         deadline: req.body.deadline,
-        awardAmmount: req.body.awardAmmount,
+        awardAmount: req.body.awardAmount,
         applicationLink: req.body.applicationLink,
         contactEmail: req.body.contactEmail,
         uploader: req.body.uploader,
@@ -73,8 +73,8 @@ router.patch('/:id',getScholarship,auth,adminOnly,async(req,res)=>{
     if(req.body.deadline != null){
         res.scholarship.deadline = req.body.deadline;
     }
-    if(req.body.awardAmmount != null){
-        res.scholarship.awardAmmount = req.body.awardAmmount;
+    if(req.body.awardAmount != null){
+        res.scholarship.awardAmount = req.body.awardAmount;
     }
     if(req.body.applicationLink != null){
         res.scholarship.applicationLink = req.body.applicationLink;

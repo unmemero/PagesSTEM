@@ -33,7 +33,7 @@ const ScholarshipSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    awardAmmount: {
+    awardAmount: {
         type: Number,
         required: true,
     },
