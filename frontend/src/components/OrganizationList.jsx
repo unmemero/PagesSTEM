@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const OrganizationList = ({ currentUser }) => {
@@ -56,46 +57,27 @@ const OrganizationList = ({ currentUser }) => {
           <tr>
             <th>Title</th>
             <th>Location</th>
-            <th>Description</th>
             <th>Majors</th>
-            <th>Meetings</th>
-            <th>Website</th>
-            <th>Contact Email</th>
             {currentUser && currentUser.role === 'admin' && (
               <React.Fragment>
                 <th>Uploader</th>
                 <th>Actions</th>
               </React.Fragment>
             )}
+            <td>Organizations</td>
           </tr>
         </thead>
         <tbody>
           {currentOrganizations.map(organization => (
             <tr key={organization._id}> 
-              <td>{organization.title}</td>
+              <td><a href={organization.website} target='_blank' rel='noopener noreferrer'></a>{organization.title}</td>
               <td>{organization.location}</td>
-              <td>{organization.description}</td>
               <td>
                 <ul>
                   {organization.majors.map(major => (
                     <li key={major}>{major}</li>
                   ))}
                 </ul>
-              </td>
-              <td>
-                <ul>
-                  {organization.meetings?.map(meeting => (
-                    <li key={meeting}>{meeting}</li>
-                  ))}
-                </ul>
-              </td>
-              <td>
-                <a href={organization.website} target="_blank" rel="noopener noreferrer">{organization.website}</a>
-              </td>
-              <td>
-                <a href={`mailto:${organization.contactEmail}`}>
-                  {organization.contactEmail}
-                </a>
               </td>
               {currentUser && currentUser.role === 'admin' && (
                 <React.Fragment>
@@ -106,6 +88,7 @@ const OrganizationList = ({ currentUser }) => {
                   </td>
                 </React.Fragment>
               )}
+              <td><Link to={`/organizations/${organization._id}`}>See more</Link></td>
             </tr>
           ))}
         </tbody>

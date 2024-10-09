@@ -51,27 +51,40 @@ const SingleScholarshipPage = () => {
             <p>{new Date(scholarship.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
             <br />
             <p>{scholarship.description}</p>
+
+            <br />
             <hr />
+            <br />
+            
             <h3>Locations</h3>
             <ul>
                 {scholarship.locations.map((location, index) => (
                     <li key={index}>{location}</li>
                 ))}
             </ul>
+
+            <br />
             <hr />
-            <h3>Requirements</h3>
-            <ul>
-                {scholarship.requirements.map((requirement, index) => (
-                    <li key={index}>{requirement}</li>
-                ))}
-            </ul>
-            <hr />
+            <br />
+
             <h3>Majors</h3>
             <ul>
                 {scholarship.majors.map((major, index) => (
                     <li key={index}>{major}</li>
                 ))}
             </ul>
+
+            <br />
+            <hr />
+            <br />
+
+            <h3>Requirements</h3>
+            <ul>
+                {scholarship.requirements.map((requirement, index) => (
+                    <li key={index}>{requirement}</li>
+                ))}
+            </ul>
+            <br />
             
             {/* Render the admin controls only for admin users */}
             {currentUser && currentUser.role === 'admin' && (

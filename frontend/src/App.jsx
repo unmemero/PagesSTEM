@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import JobsPage from './pages/JobsPage';
 import SingleJobPage from './pages/SingleJobPage';
 import OrganizationsPage from './pages/OrganizationsPage';
+import SingleOrganizationPage from './pages/SingleOrganizationPage';
 import InternshipsPage from './pages/InternshipsPage';
 import SingleInternshipPage from './pages/SingleInternshipPage';
 import ScholarshipsPage from './pages/ScholarshipsPage';
@@ -28,8 +29,9 @@ function App() {
           <Route path="/internships" element={<InternshipsPage />} />
           <Route path="/internships/:id" element={<SingleInternshipPage currentUser={currentUser}/>} />
           <Route path="/organizations" element={<OrganizationsPage />} />
+          <Route path="/organizations/:id" element={<SingleOrganizationPage currentUser={currentUser} />} />
           <Route path="/scholarships" element={<ScholarshipsPage />} />
-          <Route path="/internships/:id" element={<SingleInternshipPage currentUser={currentUser} />} />
+          <Route path="/scholarships/:id" element={<SingleScholarshipPage currentUser={currentUser} />} />
           {/* <Route path="/user/dashboard" element={<UserDashboard />} /> */}
           {/* <Route path="/admin/dashboard" element={<AdminDashboard />} /> */}
         </Routes>
