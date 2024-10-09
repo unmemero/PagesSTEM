@@ -31,9 +31,7 @@ function Login() {
       return;
     }
 
-    // Simulated login logic (replace with real authentication logic)
     if (email === 'test@example.com' && password === 'password123') {
-      // On successful login, navigate to the dashboard (for example)
       navigate('/user/dashboard');
     } else {
       setError('Invalid email or password.');
@@ -76,7 +74,7 @@ function Login() {
         <button type="submit" id="submitButton">Submit</button>
       </form>
       <p>
-        New user? Start <Link to="/create-user">here</Link>
+        New user? Start <Link to="/register">here</Link>
       </p>
     </main>
   );
