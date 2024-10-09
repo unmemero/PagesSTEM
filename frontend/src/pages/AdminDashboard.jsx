@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import JobList from '../components/JobList';
+import InternshipList from '../components/InternshipList';
+import ScholarshipList from '../components/ScholarshipList';
 
 function AdminDashboard() {
   return (
@@ -22,9 +24,8 @@ function AdminDashboard() {
         <div className="admin-actions">
           <Link to="/admin/internships/new" className="btn">Add Internship</Link>
         </div>
-        {/* Replace with a component that lists internships */}
         <div className="admin-list">
-          <p>List of internships will go here...</p>
+          <InternshipList />
         </div>
       </div>
       
@@ -44,9 +45,8 @@ function AdminDashboard() {
         <div className="admin-actions">
           <Link to="/admin/scholarships/new" className="btn">Add Scholarship</Link>
         </div>
-        {/* Replace with a component that lists scholarships */}
         <div className="admin-list">
-          <p>List of scholarships will go here...</p>
+          <ScholarshipList />
         </div>
       </div>
     </div>

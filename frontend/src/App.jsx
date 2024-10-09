@@ -13,7 +13,7 @@ import SingleScholarshipPage from './pages/SingleScholarshipPage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
-const currentUser = {role: 'user'};
+const currentUser = {role: 'admin'};
 
 function App() {
   return (
