@@ -1,28 +1,29 @@
-header {
+header.navbar {
   gap: 40px;
   max-width: 100vw;
 }
-header .title {
+header.navbar .title {
   display: flex;
   gap: 20px;
 }
-header .title #menu-toggle {
+header.navbar .title #menu-toggle {
   display: none;
 }
-header .links {
+header.navbar .header-links {
   display: flex;
   gap: 45px;
 }
-header .links-link {
+header.navbar .header-links .header-link {
+  color: white;
   border-right: 3px solid white;
   padding-right: 5px;
   transition: 0.1s ease-in;
 }
-header .links-link:hover {
+header.navbar .header-links .header-link:hover {
   color: aqua;
   border-right: solid 5px aqua;
 }
-header .links-link:active {
+header.navbar .header-links .header-link:active {
   color: green;
   border-right: green solid 5px green;
 }

@@ -1,4 +1,4 @@
-header{
+header.navbar{
     gap: 40px;
     max-width: 100vw;
     & .title{
@@ -8,10 +8,11 @@ header{
             display: none;
         }
     }
-    & .links{
+    .header-links{
         display: flex;
         gap: 45px;
-        &-link{
+        .header-link{
+            color: white;
             border-right: 3px solid white;
             padding-right: 5px;
             transition: 0.1s ease-in;
