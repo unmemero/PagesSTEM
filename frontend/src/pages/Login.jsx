@@ -48,11 +48,12 @@ function Login() {
           placeholder="email@example.com"
           name="email"
           id="userEmail"
+          autoComplete="email"
           value={email}
           onChange={handleEmailChange}
         />
         <br />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="userPassword">Password</label>
         <br />
         <div className="password-input">
           <input
@@ -63,7 +64,7 @@ function Login() {
             value={password}
             onChange={handlePasswordChange}
           />
-          <button id="password-toggle" onClick={handlePasswordToggle}>
+          <button type="" id="password-toggle" onClick={handlePasswordToggle}>
             <span className="material-symbols-outlined">
               {passwordVisible ? 'visibility_off' : 'visibility'}
             </span>

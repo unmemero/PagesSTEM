@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -9,24 +10,61 @@ const Register = () => {
     password: '',
     confirmPassword: ''
   });
-
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., form validation, API calls)
-    console.log(formData);
+    
+    // Client-side validation for password match
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMessage('Passwords do not match');
+      return;
+    }
+
+    try {
+      // Prepare data to send to the backend
+      const userData = {
+        name: `${formData.firstname} ${formData.lastname}`, // Concatenating first and last names
+        email: formData.email,
+        password: formData.password
+      };
+
+      // Make the POST request to register the user
+      const response = await axios.post('http://localhost:5000/api/users/register', userData);
+
+      // Handle successful registration (you get a token in the response)
+      setSuccessMessage('User registered successfully!');
+      setErrorMessage('');
+      console.log('Token:', response.data.token);
+
+      // Clear form or redirect to login page, etc.
+      setFormData({
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      });
+    } catch (error) {
+      console.error('Error registering user:', error.response?.data?.message || error.message);
+      setErrorMessage(error.response?.data?.message || 'Error registering user');
+    }
   };
 
   return (
     <main>
       <form onSubmit={handleSubmit}>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+
         {/* First Name */}
         <label htmlFor="userFirstName">First Name</label>
         <br />

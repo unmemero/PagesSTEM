@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const SingleOrganizationPage = () => {
-    const { id } = useParams(); // Get organization ID from the URL
+    const { id } = useParams();
     const [organization, setOrganization] = useState(null);
+    const location = useLocation();
+    const { currentUser } = location.state || {};
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const currentUser = { role: 'admin' }; // Mocked current user for testing
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/organizations/${id}`) // Fetch the organization by ID

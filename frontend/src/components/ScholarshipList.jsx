@@ -90,7 +90,9 @@ const ScholarshipList = ({ currentUser }) => {
                 </React.Fragment>
               )}
               <td>
-                <Link to={`/scholarships/${scholarship._id}`}>More info</Link>
+                <Link to={`/scholarships/${scholarship._id}`} state={{ currentUser }}>
+                  See more
+                </Link>
               </td>
             </tr>
           ))}

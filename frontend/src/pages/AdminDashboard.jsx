@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import JobList from '../components/JobList';
 import InternshipList from '../components/InternshipList';
+import OrganizationList from '../components/OrganizationList';
 import ScholarshipList from '../components/ScholarshipList';
 
 function AdminDashboard() {
@@ -36,7 +37,7 @@ function AdminDashboard() {
         </div>
         {/* Replace with a component that lists organizations */}
         <div className="admin-list">
-          <p>List of organizations will go here...</p>
+          <OrganizationList />
         </div>
       </div>
 

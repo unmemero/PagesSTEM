@@ -88,7 +88,11 @@ const OrganizationList = ({ currentUser }) => {
                   </td>
                 </React.Fragment>
               )}
-              <td><Link to={`/organizations/${organization._id}`}>See more</Link></td>
+              <td>
+                <Link to={`/organizations/${organization._id}`} state={{ currentUser }}>
+                  See more
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

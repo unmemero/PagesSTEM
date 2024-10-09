@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Ensure this import is correct
+import { useParams, useLocation } from 'react-router-dom'; 
 import axios from 'axios';
 
 const SingleJobPage = () => {
-    const { id } = useParams(); // Get job ID from the URL
+    const { id } = useParams(); 
+    const location = useLocation();
+    const { currentUser } = location.state || {};
     const [job, setJob] = useState(null); 
     const [loading, setLoading] = useState(true); 
     const [error, setError] = useState(null); 
-    const currentUser = { role: 'admin' }; // Mocked current user for testing
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/jobs/${id}`) // Fetch the job by ID
+        axios.get(`http://localhost:5000/api/jobs/${id}`)
           .then(response => {
-              setJob(response.data); // Set the job state
-              setLoading(false); // Stop loading
+              setJob(response.data);
+              setLoading(false);
           })
           .catch(error => {
               setError('Error fetching job');
-              setLoading(false); // Stop loading
+              setLoading(false); 
           });
     }, [id]);
 
     const handleUpdate = (jobId) => {
         console.log(`Updating job with ID: ${jobId}`);
-        // Add your update logic here (e.g., open an update form or modal)
+        // Add your update logic here
     };
 
     const handleDelete = (jobId) => {
@@ -31,7 +32,7 @@ const SingleJobPage = () => {
             axios.delete(`http://localhost:5000/api/jobs/${jobId}`)
                 .then(response => {
                     console.log('Job deleted:', response.data);
-                    // Handle post-delete logic (e.g., redirect to job list)
+                    // Handle post-delete logic
                 })
                 .catch(error => console.error('Error deleting job:', error));
         }
@@ -75,7 +76,6 @@ const SingleJobPage = () => {
                     <li key={index}>{major}</li>
                 ))}
             </ul>
-            
             {/* Render the admin controls only for admin users */}
             {currentUser && currentUser.role === 'admin' && (
                 <>

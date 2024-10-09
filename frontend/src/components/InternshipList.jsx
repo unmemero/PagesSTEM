@@ -106,7 +106,11 @@ const InternshipList = ({ currentUser }) => {
                   </td>
                 </>
               )}
-              <td><Link to={`/internships/${internship._id}`}>See more</Link></td>
+              <td>
+                <Link to={`/internships/${internship._id}`} state={{ currentUser }}>
+                  See more
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

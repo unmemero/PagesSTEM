@@ -81,7 +81,9 @@ const JobList = ({ currentUser }) => {
         <tbody>
           {currentJobs.map(job => (
             <tr key={job._id}>
-              <td><a href={job.applicationLink} target="_blank" rel="noopener noreferrer">{job.title}</a></td>
+              <td>
+                <a href={job.applicationLink} target="_blank" rel="noopener noreferrer">{job.title}</a>
+                </td>
               <td>{job.company}</td>
               <td>
                 {job.payType}: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(job.payAmount)}/{job.payPeriod}
@@ -98,7 +100,9 @@ const JobList = ({ currentUser }) => {
                 </>
               )}
               <td>
-                <Link to={`/jobs/${job._id}`}>See more</Link>
+                <Link to={`/jobs/${job._id}`} state={{ currentUser }}>
+                  See more
+                </Link>
               </td>
             </tr>
           ))}

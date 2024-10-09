@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const SingleScholarshipPage = () => {
-    const { id } = useParams(); // Get scholarship ID from the URL
+    const { id } = useParams();
     const [scholarship, setScholarship] = useState(null);
+    const location = useLocation();
+    const { currentUser } = location.state || {};
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const currentUser = { role: 'admin' }; // Mocked current user for testing
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/scholarships/${id}`) // Fetch the scholarship by ID
+        axios.get(`http://localhost:5000/api/scholarships/${id}`) 
           .then(response => {
-              setScholarship(response.data); // Set the scholarship state
-              setLoading(false); // Stop loading
+              setScholarship(response.data); 
+              setLoading(false); 
           })
           .catch(error => {
               setError('Error fetching scholarship');
-              setLoading(false); // Stop loading
+              setLoading(false);
           });
     }, [id]);
 

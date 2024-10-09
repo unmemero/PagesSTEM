@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const SingleInternshipPage = () => {
-    const { id } = useParams(); // Get internship ID from the URL
+    const { id } = useParams(); 
     const [internship, setInternship] = useState(null);
+    const location = useLocation();
+    const { currentUser } = location.state || {};
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const currentUser = { role: 'admin' }; // Mocked current user for testing
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/internships/${id}`) // Fetch the internship by ID
+        axios.get(`http://localhost:5000/api/internships/${id}`) 
           .then(response => {
-              setInternship(response.data); // Set the internship state
-              setLoading(false); // Stop loading
+              setInternship(response.data);
+              setLoading(false);
           })
           .catch(error => {
               console.error('Error fetching internship:', error);
               setError('Error fetching internship');
-              setLoading(false); // Stop loading
+              setLoading(false);
           });
     }, [id]);
 

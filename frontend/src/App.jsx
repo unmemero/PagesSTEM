@@ -15,7 +15,7 @@ import SingleScholarshipPage from './pages/SingleScholarshipPage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
-const currentUser = {role: 'admin'};
+const currentUser = {role: 'user'};
 
 function App() {
   return (
