@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import '../assets/styles/pages.css';
 
 const JobList = ({ currentUser }) => {
   const [jobs, setJobs] = useState([]);
@@ -48,11 +49,12 @@ const JobList = ({ currentUser }) => {
   return (
     <div className="job-list">
       <div className="pagination-control">
-        <label htmlFor="jobsPerPage">Jobs per page:</label>
+        <label htmlFor="jobsPerPage" className="per-page-heading">Jobs per page:</label>
         <select
           id="jobsPerPage"
           value={jobsPerPage}
           onChange={handleJobsPerPageChange}
+          className="select"
         >
           <option value="10">10</option>
           <option value="20">20</option>
@@ -61,15 +63,15 @@ const JobList = ({ currentUser }) => {
         </select>
       </div>
       
-      <table>
+      <table className="table">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Company</th>
-            <th>Pay</th>
-            <th>Date Posted</th>
-            <th>Deadline</th>
-            <th>More info</th>
+            <th className="table-header">Title</th>
+            <th className="table-header">Company</th>
+            <th className="table-header">Pay</th>
+            <th className="table-header">Date Posted</th>
+            <th className="table-header">Deadline</th>
+            <th className="table-header">More info</th>
             {currentUser && currentUser.role === 'admin' && (
               <>
                 <th>Uploader</th>
@@ -80,10 +82,8 @@ const JobList = ({ currentUser }) => {
         </thead>
         <tbody>
           {currentJobs.map(job => (
-            <tr key={job._id}>
-              <td>
-                <a href={job.applicationLink} target="_blank" rel="noopener noreferrer">{job.title}</a>
-                </td>
+            <tr key={job._id} className="table-row">
+              <td><a href={job.applicationLink} target="_blank" rel="noopener noreferrer" className="link">{job.title}</a></td>
               <td>{job.company}</td>
               <td>
                 {job.payType}: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(job.payAmount)}/{job.payPeriod}
@@ -94,8 +94,8 @@ const JobList = ({ currentUser }) => {
                 <>
                   <td>{job.uploader}</td>
                   <td>
-                    <button onClick={() => console.log(`Updating job with ID: ${job._id}`)}>Update</button>
-                    <button onClick={() => handleDelete(job._id)}>Delete</button>
+                    <button onClick={() => console.log(`Updating job with ID: ${job._id}`)} className="button-update">Update</button>
+                    <button onClick={() => handleDelete(job._id)} className="button-delete">Delete</button>
                   </td>
                 </>
               )}
@@ -114,7 +114,7 @@ const JobList = ({ currentUser }) => {
           <button
             key={number + 1}
             onClick={() => paginate(number + 1)}
-            className={currentPage === number + 1 ? 'active' : ''}
+            className={currentPage === number + 1 ? 'active' : 'pagination-button'}
           >
             {number + 1}
           </button>

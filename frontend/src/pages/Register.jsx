@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+const containsUpperCase = (str) => /[A-Z]/.test(str);
+const containsLowercase = (str) => /[a-z]/.test(str);
+const containsNumber = (str) => /[0-9]/.test(str);
+const containsSpecialCharacter = (str) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(str);
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +19,9 @@ const Register = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false); // Flag for password errors
+
+  const navigate = useNavigate(); // Initialize useNavigate here
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,10 +30,20 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    // Clear messages at the start
+    setErrorMessage('');
+    setSuccessMessage('');
+    setPasswordError(false);
+
     // Client-side validation for password match
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage('Passwords do not match');
+      return;
+    }
+
+    if (formData.password.length < 8 || !containsUpperCase(formData.password) || !containsLowercase(formData.password) || !containsNumber(formData.password) || !containsSpecialCharacter(formData.password)) {
+      setPasswordError(true); // Set error flag for password validation
       return;
     }
 
@@ -42,8 +60,7 @@ const Register = () => {
 
       // Handle successful registration (you get a token in the response)
       setSuccessMessage('User registered successfully!');
-      setErrorMessage('');
-      console.log('Token:', response.data.token);
+      setErrorMessage(''); // Clear error message on success
 
       // Clear form or redirect to login page, etc.
       setFormData({
@@ -53,18 +70,22 @@ const Register = () => {
         password: '',
         confirmPassword: ''
       });
+
+      // Redirect after 3 seconds
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000); 
+
     } catch (error) {
       console.error('Error registering user:', error.response?.data?.message || error.message);
       setErrorMessage(error.response?.data?.message || 'Error registering user');
+      setSuccessMessage(''); // Clear success message if error occurs
     }
   };
 
   return (
     <main>
       <form onSubmit={handleSubmit}>
-        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-
         {/* First Name */}
         <label htmlFor="userFirstName">First Name</label>
         <br />
@@ -159,6 +180,30 @@ const Register = () => {
         <button type="submit" id="submitButton">
           Submit
         </button>
+
+        {/* Show error message */}
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+
+        {/* Show success message */}
+        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+
+        {/* Display password error with JSX */}
+        {passwordError && (
+          <div style={{ color: 'red' }}>
+            <p>Password must:</p>
+            <ul>
+              <li>Be at least 8 characters long</li>
+              <li>Contain:
+                <ul>
+                  <li>An uppercase letter</li>
+                  <li>A lowercase letter</li>
+                  <li>A number</li>
+                  <li>A special character</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        )}
       </form>
 
       <p>
