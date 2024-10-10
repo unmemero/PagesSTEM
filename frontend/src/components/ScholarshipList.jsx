@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import '../assets/styles/pages.css';
 
 const ScholarshipList = ({ currentUser }) => {
   const [scholarships, setScholarships] = useState([]);
@@ -39,11 +40,12 @@ const ScholarshipList = ({ currentUser }) => {
   return (
     <div className="scholarship-list">
       <div className="pagination-control">
-        <label htmlFor="scholarshipsPerPage">Scholarships per page:</label>
+        <label htmlFor="scholarshipsPerPage" className="per-page-heading">Scholarships per page:</label>
         <select
           id="scholarshipsPerPage"
           value={scholarshipsPerPage}
           onChange={handleScholarshipsPerPageChange}
+          className="select"
         >
           <option value="10">10</option>
           <option value="20">20</option>
@@ -52,13 +54,13 @@ const ScholarshipList = ({ currentUser }) => {
         </select>
       </div>
 
-      <table>
+      <table className="table">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Organization</th>
-            <th>Majors</th>
-            <th>Deadline</th>
+            <th className="table-header">Title</th>
+            <th className="table-header">Organization</th>
+            <th className="table-header">Majors</th>
+            <th className="table-header">Deadline</th>
             {currentUser && currentUser.role === 'admin' && (
               <React.Fragment>
                 <th>Uploader</th>
@@ -69,8 +71,8 @@ const ScholarshipList = ({ currentUser }) => {
         </thead>
         <tbody>
           {currentScholarships.map((scholarship) => (
-            <tr key={scholarship._id}>
-              <td><a href={scholarship.applicationLink} target="_blank" rel="noopener noreferrer">{scholarship.title}</a></td>
+            <tr key={scholarship._id} className="table-row">
+              <td><a href={scholarship.applicationLink} target="_blank" rel="noopener noreferrer" className="link">{scholarship.title}</a></td>
               <td>{scholarship.organization}</td>
               <td>
                 <ul>
@@ -84,8 +86,8 @@ const ScholarshipList = ({ currentUser }) => {
                 <React.Fragment>
                   <td>{scholarship.uploader}</td>
                   <td>
-                    <button onClick={() => handleUpdate(scholarship._id)}>Update</button>
-                    <button onClick={() => handleDelete(scholarship._id)}>Delete</button>
+                    <button onClick={() => handleUpdate(scholarship._id)} className="button-update">Update</button>
+                    <button onClick={() => handleDelete(scholarship._id)} className="button-delete">Delete</button>
                   </td>
                 </React.Fragment>
               )}
@@ -102,7 +104,7 @@ const ScholarshipList = ({ currentUser }) => {
           <button
             key={number + 1}
             onClick={() => paginate(number + 1)}
-            className={currentPage === number + 1 ? 'active' : ''}
+            className={currentPage === number + 1 ? 'active' : 'pagination-button'}
           >
             {number + 1}
           </button>

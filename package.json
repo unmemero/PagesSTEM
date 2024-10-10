@@ -2,12 +2,14 @@
   "name": "stem",
   "version": "1.0.0",
   "scripts": {
-  "server": "cd backend && npx nodemon server.js",
-  "client": "cd frontend && npm start",
-  "start": "concurrently \"npm run server\" \"npm run client\""
-}
-,
+    "server": "cd backend && npx nodemon server.js",
+    "client": "cd frontend && npm start",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
   "devDependencies": {
     "concurrently": "^6.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
   }
 }

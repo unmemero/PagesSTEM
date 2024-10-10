@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import '../assets/styles/pages.css';
 
 const InternshipList = ({ currentUser }) => {
   const [internships, setInternships] = useState([]);
@@ -40,11 +41,12 @@ const InternshipList = ({ currentUser }) => {
   return (
     <div className="internship-list">
       <div className="pagination-control">
-        <label htmlFor="internshipsPerPage">Internships per page:</label>
+        <label htmlFor="internshipsPerPage" className="per-page-heading">Internships per page:</label>
         <select
           id="internshipsPerPage"
           value={internshipsPerPage}
           onChange={handleInternshipsPerPageChange}
+          className="select"
         >
           <option value="10">10</option>
           <option value="20">20</option>
@@ -53,17 +55,17 @@ const InternshipList = ({ currentUser }) => {
         </select>
       </div>
 
-      <table>
+      <table className="table">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Company</th>
-            <th>Locations</th>
-            <th>Preferred Majors</th>
-            <th>Pay</th>
-            <th>Deadline</th>
-            <th>Period</th>
-            <th>For more Info</th>
+            <th className="table-header">Title</th>
+            <th className="table-header">Company</th>
+            <th className="table-header">Locations</th>
+            <th className="table-header">Preferred Majors</th>
+            <th className="table-header">Pay</th>
+            <th className="table-header">Deadline</th>
+            <th className="table-header">Period</th>
+            <th className="table-header">For more Info</th>
             {currentUser && currentUser.role === 'admin' && (
               <>
                 <th>Uploader</th>
@@ -74,8 +76,8 @@ const InternshipList = ({ currentUser }) => {
         </thead>
         <tbody>
           {currentInternships.map(internship => (
-            <tr key={internship._id || internship.id}>
-              <td><a href={internship.applicationLink} target="_blank" rel="noopener noreferrer">{internship.title}</a></td>
+            <tr key={internship._id || internship.id} className="table-row">
+              <td><a href={internship.applicationLink} target="_blank" rel="noopener noreferrer"  className="link">{internship.title}</a></td>
               <td>{internship.company}</td>
               <td>
                 <ul>
@@ -101,8 +103,8 @@ const InternshipList = ({ currentUser }) => {
                 <>
                   <td>{internship.uploader}</td>
                   <td>
-                    <button onClick={() => handleUpdate(internship.id)}>Update</button>
-                    <button onClick={() => handleDelete(internship.id)}>Delete</button>
+                    <button onClick={() => handleUpdate(internship.id)} className="button-update">Update</button>
+                    <button onClick={() => handleDelete(internship.id)} className="button-delete">Delete</button>
                   </td>
                 </>
               )}
@@ -117,7 +119,7 @@ const InternshipList = ({ currentUser }) => {
           <button
             key={number + 1}
             onClick={() => paginate(number + 1)}
-            className={currentPage === number + 1 ? 'active' : ''}
+            className={currentPage === number + 1 ? 'active' : 'pagination-button'}
           >
             {number + 1}
           </button>

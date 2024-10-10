@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import '../assets/styles/pages.css';
 
 const OrganizationList = ({ currentUser }) => {
   const [organizations, setOrganizations] = useState([]);
@@ -39,11 +40,12 @@ const OrganizationList = ({ currentUser }) => {
   return (
     <div className="organization-list">
       <div className="pagination-control">
-        <label htmlFor="organizationsPerPage">Organizations per page:</label>
+        <label htmlFor="organizationsPerPage" className="per-page-heading">Organizations per page:</label>
         <select
           id="organizationsPerPage"
           value={organizationsPerPage}
           onChange={handleOrganizationsPerPageChange}
+          className="select"
         >
           <option value="10">10</option>
           <option value="20">20</option>
@@ -52,12 +54,12 @@ const OrganizationList = ({ currentUser }) => {
         </select>
       </div>
 
-      <table>
+      <table className="table">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Location</th>
-            <th>Majors</th>
+            <th className="table-header">Title</th>
+            <th className="table-header">Location</th>
+            <th className="table-header">Majors</th>
             {currentUser && currentUser.role === 'admin' && (
               <React.Fragment>
                 <th>Uploader</th>
@@ -69,8 +71,9 @@ const OrganizationList = ({ currentUser }) => {
         </thead>
         <tbody>
           {currentOrganizations.map(organization => (
-            <tr key={organization._id}> 
-              <td><a href={organization.website} target='_blank' rel='noopener noreferrer'></a>{organization.title}</td>
+            <tr key={organization._id} className="table-row"> 
+              <td><a href={organization.website} target='_blank' rel='noopener noreferrer'
+              className="link"></a>{organization.title}</td>
               <td>{organization.location}</td>
               <td>
                 <ul>
@@ -83,8 +86,8 @@ const OrganizationList = ({ currentUser }) => {
                 <React.Fragment>
                   <td>{organization.uploader}</td>
                   <td>
-                    <button onClick={() => handleUpdate(organization._id)}>Update</button> {/* Use `_id` */}
-                    <button onClick={() => handleDelete(organization._id)}>Delete</button> {/* Use `_id` */}
+                    <button onClick={() => handleUpdate(organization._id)} className="button-update">Update</button> {/* Use `_id` */}
+                    <button onClick={() => handleDelete(organization._id)} className="button-delete">Delete</button> {/* Use `_id` */}
                   </td>
                 </React.Fragment>
               )}
@@ -99,7 +102,7 @@ const OrganizationList = ({ currentUser }) => {
           <button
             key={number} // Use `number` itself for pagination button keys
             onClick={() => paginate(number + 1)}
-            className={currentPage === number + 1 ? 'active' : ''}
+            className={currentPage === number + 1 ? 'active' : 'pagination-button'}
           >
             {number + 1}
           </button>
