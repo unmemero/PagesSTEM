@@ -43,13 +43,13 @@ const SingleScholarshipPage = () => {
     if (!scholarship) return <div>Scholarship not found</div>;
 
     return (
-        <div className='single-scholarship-page'>
+        <div className='single-page'>
             <h1>{scholarship.title}</h1>
             <h2>{scholarship.organization}</h2>
             <br />
-            <a href={scholarship.applicationLink}>Apply Here</a>
-            <p>{new Date(scholarship.datePosted).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
-            <p>{new Date(scholarship.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
+            <a href={scholarship.applicationLink} className='application-link'>Apply Here</a>
+            <p>Date posted: {new Date(scholarship.datePosted).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
+            <p>Deadline: {new Date(scholarship.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
             <br />
             <p>{scholarship.description}</p>
 
@@ -97,6 +97,7 @@ const SingleScholarshipPage = () => {
                     </div>
                 </>
             )}
+            <div className='bottom'></div>
         </div>
     );
 }

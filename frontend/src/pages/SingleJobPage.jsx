@@ -43,18 +43,19 @@ const SingleJobPage = () => {
     if (!job) return <div>Job not found</div>;
 
     return (
-        <div className='single-job-page'>
+        <div className='single-page'>
             <h1>{job.title}</h1>
             <h2>{job.company}</h2>
             <br />
-            <a href={job.applicationLink}>Apply Here</a>
+            <a href={job.applicapplicationationLink} className='application-link'>Apply Here</a>
             <p>
                 {job.payType}: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(job.payAmount)}/{job.payPeriod}
             </p>
-            <p>{new Date(job.datePosted).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
-            <p>{new Date(job.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
+            <p>Date posted: {new Date(job.datePosted).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
+            <p>Deadline: {new Date(job.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
             <br />
-            <p>{job.description}</p>
+            <h3>Description</h3>
+            <p className='description-text'>{job.description}</p>
             <hr />
             <h3>Locations</h3>
             <ul>
@@ -86,6 +87,7 @@ const SingleJobPage = () => {
                     </div>
                 </>
             )}
+            <div className='bottom'></div>
         </div>
     );
 }

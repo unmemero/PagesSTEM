@@ -8,6 +8,7 @@ const JobList = ({ currentUser }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
+  const [sortConfig, setSortConfig] = useState(null);
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/jobs')
@@ -20,6 +21,22 @@ const JobList = ({ currentUser }) => {
         setLoading(false);
       });
   }, []);
+
+  const handleSort = (key, direction) => {
+    const sortedJobs = [...jobs].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return direction === 'ascending' ? -1 : 1;
+      }
+      if (a[key] > b[key]) {
+        return direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+  
+    setJobs(sortedJobs);
+    setSortConfig({ key, direction });
+  };
+  
 
   // Pagination logic
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -66,18 +83,41 @@ const JobList = ({ currentUser }) => {
       <table className="table">
         <thead>
           <tr>
-            <th className="table-header">Title</th>
-            <th className="table-header">Company</th>
-            <th className="table-header">Pay</th>
-            <th className="table-header">Date Posted</th>
-            <th className="table-header">Deadline</th>
-            <th className="table-header">More info</th>
+            <th className="table-header">
+              Title
+              <button onClick={() => handleSort('title', 'ascending')}>▲</button>
+              <button onClick={() => handleSort('title', 'descending')}>▼</button>
+            </th>
+            <th className="table-header">
+              Company
+              <button onClick={() => handleSort('company','ascending')}>▲</button>
+              <button onClick={() => handleSort('company','descending')}>▼</button>
+            </th>
+            <th className="table-header">
+              Pay
+              <button onClick={() => handleSort('payAmount','ascending')}>▲</button>
+              <button onClick={() => handleSort('payAmount','descending')}>▼</button>
+            </th>
+            <th className="table-header">
+              Date Posted
+              <button onClick={() => handleSort('datePosted','ascending')}>▲</button>
+              <button onClick={() => handleSort('datePosted','descending')}>▼</button>
+            </th>
+            <th className="table-header">
+              Deadline
+              <button onClick={() => handleSort('deadline','ascending')}>▲</button>
+              <button onClick={() => handleSort('deadline','descending')}>▼</button>
+            </th>
             {currentUser && currentUser.role === 'admin' && (
               <>
-                <th>Uploader</th>
+                <th>
+                  Uploader
+
+                </th>
                 <th>Actions</th>
               </>
             )}
+            <th className="table-header">More info</th>
           </tr>
         </thead>
         <tbody>
@@ -100,7 +140,7 @@ const JobList = ({ currentUser }) => {
                 </>
               )}
               <td>
-                <Link to={`/jobs/${job._id}`} state={{ currentUser }}>
+                <Link to={`/jobs/${job._id}`} state={{ currentUser }} className='more-link'>
                   See more
                 </Link>
               </td>

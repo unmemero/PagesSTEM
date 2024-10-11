@@ -2,6 +2,7 @@
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: center;
+  color: #fff;
 }
 
 .pagination-control {
@@ -23,24 +24,59 @@
 }
 
 .table {
-  width: 95%;
+  max-width: 95%;
   border-collapse: collapse;
   background-color: #1c1e22;
   color: #fff;
   margin: 20px auto;
   border-radius: 8px;
   overflow: hidden;
+  th{
+    & button{
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      transition: ease-in 0.2s;
+      &:hover {
+        color: #0e5fd1;
+      }
+      &:active {
+        color: red;
+      }
+    }
+  }
   th, td {
     padding: 12px 15px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #383d44;
+    ul{
+      padding: 0;
+      margin: 0;
+    }
+    .more-link{
+      background: rgb(0, 0, 81);
+      border: solid 2px gray;
+      color: white;
+      text-decoration: none;
+      padding: 5px;
+      border-radius: 7px;
+      &:hover {
+        background: rgb(0, 0, 255);
+      }
+      &:active {
+        background: red;
+      }
+    }
   }
   &-header {
     background-color: #2d3137;
     font-weight: bold;
     color: #fff;
+    max-height: 40px;
   }
   .table-row {
+    max-width: fit-content;
     .link {
         color: #03ffff;
         text-decoration: none;
@@ -99,5 +135,47 @@
       background-color: #03FFFF;
       color: #4b5563
     }
+  }
+}
+
+.single-page {
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  background: #2d3137;
+  padding: 5px 40px;
+  color: #fff;
+  border: solid white 10px;
+  border-radius: 10px;
+  & h1,h2{
+    text-align: center;
+    margin-bottom: 0;
+  }
+  & .application-link{
+    color: white;
+    text-decoration: none;
+    background: blue;
+    padding: 7px;
+    border-radius: 5px;
+    border: solid 2px white;
+    width: fit-content;
+    margin-bottom: 20px;
+  }
+  &  hr{
+    width: 80vw;
+    height: 2px;
+    background: white;
+  }
+  & .description-text{
+    padding-left: 30px;
+  }
+  & p{
+    margin: 0;
+  }
+  & ul{
+    margin: 0;
+  }
+  & .bottom{
+    margin-bottom: 40px;
   }
 }

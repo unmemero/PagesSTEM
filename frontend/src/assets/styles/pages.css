@@ -2,6 +2,7 @@
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: center;
+  color: #fff;
 }
 
 .pagination-control {
@@ -23,7 +24,7 @@
 }
 
 .table {
-  width: 95%;
+  max-width: 95%;
   border-collapse: collapse;
   background-color: #1c1e22;
   color: #fff;
@@ -31,15 +32,51 @@
   border-radius: 8px;
   overflow: hidden;
 }
+.table th button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: ease-in 0.2s;
+}
+.table th button:hover {
+  color: #0e5fd1;
+}
+.table th button:active {
+  color: red;
+}
 .table th, .table td {
   padding: 12px 15px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #383d44;
+}
+.table th ul, .table td ul {
+  padding: 0;
+  margin: 0;
+}
+.table th .more-link, .table td .more-link {
+  background: rgb(0, 0, 81);
+  border: solid 2px gray;
+  color: white;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 7px;
+}
+.table th .more-link:hover, .table td .more-link:hover {
+  background: rgb(0, 0, 255);
+}
+.table th .more-link:active, .table td .more-link:active {
+  background: red;
 }
 .table-header {
   background-color: #2d3137;
   font-weight: bold;
   color: #fff;
+  max-height: 40px;
+}
+.table .table-row {
+  max-width: -moz-fit-content;
+  max-width: fit-content;
 }
 .table .table-row .link {
   color: #03ffff;
@@ -98,4 +135,47 @@
 .pagination-button.active {
   background-color: #03FFFF;
   color: #4b5563;
+}
+
+.single-page {
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  background: #2d3137;
+  padding: 5px 40px;
+  color: #fff;
+  border: solid white 10px;
+  border-radius: 10px;
+}
+.single-page h1, .single-page h2 {
+  text-align: center;
+  margin-bottom: 0;
+}
+.single-page .application-link {
+  color: white;
+  text-decoration: none;
+  background: blue;
+  padding: 7px;
+  border-radius: 5px;
+  border: solid 2px white;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-bottom: 20px;
+}
+.single-page hr {
+  width: 80vw;
+  height: 2px;
+  background: white;
+}
+.single-page .description-text {
+  padding-left: 30px;
+}
+.single-page p {
+  margin: 0;
+}
+.single-page ul {
+  margin: 0;
+}
+.single-page .bottom {
+  margin-bottom: 40px;
 }/*# sourceMappingURL=pages.css.map */

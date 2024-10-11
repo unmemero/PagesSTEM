@@ -44,13 +44,14 @@ const SingleInternshipPage = () => {
     if (!internship) return <div>Internship not found</div>;
 
     return (
-        <div className='single-internship-page'>
+        <div className='single-page'>
             <h1>{internship.title}</h1>
             <h2>{internship.organization}</h2>
             <br />
-            <a href={internship.applicationLink} target="_blank" rel="noopener noreferrer">Apply Here</a>
-            <p>{new Date(internship.datePosted).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
-            <p>{new Date(internship.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
+            <a href={internship.applicationLink} target="_blank" rel="noopener noreferrer" className='application-link'>Apply Here</a>
+            <p>Date posted: {new Date(internship.datePosted).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
+            <p>Deadline: {new Date(internship.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
+            <p>Period: {new Date(internship.startDate).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })} to {new Date(internship.endDate).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
             <br />
             <p>{internship.description}</p>
             <hr />
@@ -85,6 +86,7 @@ const SingleInternshipPage = () => {
                     </div>
                 </>
             )}
+            <div className='bottom'></div>
         </div>
     );
 }

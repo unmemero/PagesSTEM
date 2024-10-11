@@ -15,20 +15,20 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Hash the password before saving
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
         const newUser = new User({
             name,
             email,
-            password: hashedPassword, // Save hashed password
+            password, // Pass plain password
             role: role || 'user' 
         });
 
-        await newUser.save();
+        await newUser.save(); // pre-save hook hashes the password
 
-        const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(
+            { id: newUser._id, role: newUser.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
 
         res.status(201).json({ token, user: { role: newUser.role } }); // Return token and role
     } catch (err) {
@@ -36,6 +36,7 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 // Login Route
 router.post('/login', async (req, res) => {

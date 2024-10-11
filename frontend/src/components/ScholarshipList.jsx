@@ -7,11 +7,28 @@ const ScholarshipList = ({ currentUser }) => {
   const [scholarships, setScholarships] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [scholarshipsPerPage, setScholarshipsPerPage] = useState(10);
+  const [sortConfig, setSortConfig] = useState(null);
+
   useEffect(() => {
     axios.get('http://localhost:5000/api/scholarships')
       .then(response => setScholarships(response.data))
       .catch(error => console.error('Error fetching scholarships:', error));
   }, []);
+
+  const handleSort = (key, direction) => {
+    const sortedScholarships = [...scholarships].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return direction === 'ascending' ? -1 : 1;
+      }
+      if (a[key] > b[key]) {
+        return direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+  
+    setScholarships(sortedScholarships);
+    setSortConfig({ key, direction });
+  };
 
   // Pagination logic
   const indexOfLastScholarship = currentPage * scholarshipsPerPage;
@@ -57,16 +74,37 @@ const ScholarshipList = ({ currentUser }) => {
       <table className="table">
         <thead>
           <tr>
-            <th className="table-header">Title</th>
-            <th className="table-header">Organization</th>
-            <th className="table-header">Majors</th>
-            <th className="table-header">Deadline</th>
+            <th className="table-header">
+              Title
+              <button onClick={() => handleSort('title', 'ascending')} className="sort-button">▲</button>
+              <button onClick={() => handleSort('title', 'descending')} className="sort-button">▼</button>  
+            </th>
+            <th className="table-header">
+              Organization
+              <button onClick={() => handleSort('organization', 'ascending')} className="sort-button">▲</button>
+              <button onClick={() => handleSort('organization', 'descending')} className="sort-button">▼</button>
+            </th>
+            <th className="table-header">
+              Majors
+              <button onClick={() => handleSort('majors', 'ascending')} className="sort-button">▲</button>
+              <button onClick={() => handleSort('majors', 'descending')} className="sort-button">▼</button>  
+            </th>
+            <th className="table-header">
+              Deadline
+              <button onClick={() => handleSort('deadline', 'ascending')} className="sort-button">▲</button>
+              <button onClick={() => handleSort('deadline', 'descending')} className="sort-button">▼</button>  
+            </th>
             {currentUser && currentUser.role === 'admin' && (
               <React.Fragment>
-                <th>Uploader</th>
+                <th>
+                  Uploader
+                  <button onClick={() => handleSort('uploader', 'ascending')} className="sort-button">▲</button>
+                  <button onClick={() => handleSort('uploader', 'descending')} className="sort-button">▼</button>  
+                </th>
                 <th>Actions</th>
               </React.Fragment>
             )}
+            <th className="table-header">More info</th>
           </tr>
         </thead>
         <tbody>
@@ -92,7 +130,7 @@ const ScholarshipList = ({ currentUser }) => {
                 </React.Fragment>
               )}
               <td>
-                <Link to={`/scholarships/${scholarship._id}`} state={{ currentUser }}>
+                <Link to={`/scholarships/${scholarship._id}`} state={{ currentUser }} className='more-link'>
                   See more
                 </Link>
               </td>

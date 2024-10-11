@@ -44,15 +44,15 @@ const SingleOrganizationPage = () => {
     if (!organization) return <div>Organization not found</div>;
 
     return (
-        <div className='single-organization-page'>
+        <div className='single-page'>
             <h1>{organization.title}</h1>
             <h2>Location: {organization.location}</h2>
             <br />
             {organization.logo && <img src={organization.logo} alt={`${organization.title} logo`} style={{ maxWidth: '200px' }} />}
             <br />
-            <a href={organization.website} target="_blank" rel="noopener noreferrer">Visit Website</a>
-            <p>Date Added: {new Date(organization.dateAdded).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</p>
+            <a href={organization.website} target="_blank" rel="noopener noreferrer" className='application-link'>Visit Website</a>
             <br />
+            <h3>Description</h3>
             <p>{organization.description}</p>
             <hr />
             <h3>Meetings</h3>
@@ -102,6 +102,7 @@ const SingleOrganizationPage = () => {
                     </div>
                 </>
             )}
+            <div className='bottom'></div>
         </div>
     );
 }

@@ -7,12 +7,28 @@ const InternshipList = ({ currentUser }) => {
   const [internships, setInternships] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [internshipsPerPage, setInternshipsPerPage] = useState(10);
+  const [sortConfig, setSortConfig] = useState(null);
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/internships')
       .then(response => setInternships(response.data))
       .catch(error => console.error('Error fetching internships:', error));
   }, []);
+
+  const handleSort = (key, direction) => {
+    const sortedInternships = [...internships].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return direction === 'ascending' ? -1 : 1;
+      }
+      if (a[key] > b[key]) {
+        return direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+  
+    setInternships(sortedInternships);
+    setSortConfig({ key, direction });
+  };
 
   // Pagination logic
   const indexOfLastInternship = currentPage * internshipsPerPage;
@@ -58,46 +74,56 @@ const InternshipList = ({ currentUser }) => {
       <table className="table">
         <thead>
           <tr>
-            <th className="table-header">Title</th>
-            <th className="table-header">Company</th>
-            <th className="table-header">Locations</th>
-            <th className="table-header">Preferred Majors</th>
-            <th className="table-header">Pay</th>
-            <th className="table-header">Deadline</th>
-            <th className="table-header">Period</th>
-            <th className="table-header">For more Info</th>
+            <th className="table-header">
+              Title
+              <button onClick={() => handleSort('title', 'ascending')}>▲</button>
+              <button onClick={() => handleSort('title', 'descending')}>▼</button>
+            </th>
+            <th className="table-header">
+              Company
+              <button onClick={() => handleSort('company', 'ascending')}>▲</button>
+              <button onClick={() => handleSort('company', 'descending')}>▼</button>
+            </th>
+            <th className="table-header">
+              Pay
+              <button onClick={() => handleSort('payAmount', 'ascending')}>▲</button>
+              <button onClick={() => handleSort('payAmount', 'descending')}>▼</button>
+            </th>
+            <th className="table-header">
+              Period
+              <button onClick={() => handleSort('payPeriod', 'ascending')}>▲</button>
+              <button onClick={() => handleSort('payPeriod', 'descending')}>▼</button>
+            </th>
+            <th className="table-header">
+              Deadline
+              <button onClick={() => handleSort('deadline', 'ascending')}>▲</button>
+              <button onClick={() => handleSort('deadline', 'descending')}>▼</button>
+            </th>
             {currentUser && currentUser.role === 'admin' && (
               <>
-                <th>Uploader</th>
+                <th>
+                  Uploader
+                  <button onClick={() => handleSort('uploader', 'ascending')}>▲</button>
+                  <button onClick={() => handleSort('uploader', 'descending')}>▼</button>  
+                </th>
                 <th>Actions</th>
               </>
             )}
+            <th className="table-header">More Info</th>
           </tr>
         </thead>
         <tbody>
           {currentInternships.map(internship => (
             <tr key={internship._id || internship.id} className="table-row">
-              <td><a href={internship.applicationLink} target="_blank" rel="noopener noreferrer"  className="link">{internship.title}</a></td>
+              <td>
+                <a href={internship.applicationLink} target="_blank" rel="noopener noreferrer"  className="link">{internship.title}</a>
+              </td>
               <td>{internship.company}</td>
-              <td>
-                <ul>
-                  {internship.locations.map((location, index) => (
-                    <li key={index}>{location}</li>
-                  ))}
-                </ul>
-              </td>
-              <td>
-                <ul>
-                  {internship.preferredMajors?.map((major, index) => (
-                    <li key={index}>{major}</li>
-                  ))}
-                </ul>
-              </td>
               <td>
                 {internship.payType}: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(internship.payAmount)}/{internship.payPeriod}
               </td>
-              <td>{new Date(internship.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</td>
               <td>{new Date(internship.startDate).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })} to {new Date(internship.endDate).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</td>
+              <td>{new Date(internship.deadline).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}</td>
 
               {currentUser && currentUser.role === 'admin' && (
                 <>
@@ -109,7 +135,7 @@ const InternshipList = ({ currentUser }) => {
                 </>
               )}
               <td>
-                <Link to={`/internships/${internship._id}`} state={{ currentUser }}>
+                <Link to={`/internships/${internship._id}`} state={{ currentUser }} className="more-link">
                   See more
                 </Link>
               </td>

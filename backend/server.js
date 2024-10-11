@@ -1,9 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
-/*
 const helmet = require('helmet');
-*/
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -24,9 +22,7 @@ const corsOption = {
 // Init Middleware
 app.use(express.json());
 app.use(cors(corsOption));  // Enable CORS for frontend communication
-/*
 app.use(helmet());
-*/
 
 // Define routes
 app.use('/api/internships', require('./routes/internships'));
