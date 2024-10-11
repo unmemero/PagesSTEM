@@ -60,4 +60,19 @@ header.navbar .header-links .header-link:active {
     display: flex;
     flex-direction: column;
   }
+}
+.auth-links {
+  display: flex;
+  gap: 10px;
+}
+.auth-links a, .auth-links button {
+  background: none;
+  border: none;
+  text-decoration: none;
+  display: flex;
+  cursor: pointer;
+  color: white;
+  font-family: sans-serif;
+  align-items: center;
+  font-size: 1.02em;
 }/*# sourceMappingURL=header.css.map */
